@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply min-h-screen bg-slate-50 text-slate-800 antialiased;
+  background-image: radial-gradient(circle at 10% 10%, #ecfdf3 0, transparent 25%), radial-gradient(circle at 90% 2%, #fef2f2 0, transparent 20%);
+}
+
+#root {
+  @apply min-h-screen;
+}
+
+.card {
+  @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-soft;
+}
