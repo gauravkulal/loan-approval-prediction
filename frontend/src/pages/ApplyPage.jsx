@@ -29,12 +29,12 @@ export default function ApplyPage() {
   return (
     <div className="space-y-4">
       <div className="card">
-        <h2 className="text-2xl font-semibold text-slate-900">Loan Application Form</h2>
-        <p className="mt-2 text-slate-600">Complete all sections and submit to generate prediction and risk insights.</p>
+        <h2 className="text-2xl font-semibold text-slate-900 dark:text-dark-text">Loan Application Form</h2>
+        <p className="mt-2 text-slate-600 dark:text-dark-muted">Complete all sections and submit to generate prediction and risk insights.</p>
       </div>
 
       {error ? (
-        <div className="rounded-xl border border-danger-100 bg-danger-50 px-4 py-3 text-sm text-danger-500">{error}</div>
+        <div className="rounded-xl border border-danger-100 bg-danger-50 px-4 py-3 text-sm text-danger-500 dark:border-danger-500/30 dark:bg-danger-500/10">{error}</div>
       ) : null}
 
       <LoanForm formData={formData} setFormData={setFormData} onSubmit={handlePredict} loading={loading} />

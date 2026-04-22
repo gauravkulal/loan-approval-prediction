@@ -15,6 +15,7 @@ import {
 import { fetchStats, getApiErrorMessage } from "../api";
 import RecentPredictionsTable from "../components/dashboard/RecentPredictionsTable";
 import StatCard from "../components/dashboard/StatCard";
+import { useTheme } from "../context/ThemeContext";
 
 const pieColors = ["#14a44d", "#dc2626"];
 
@@ -22,6 +23,7 @@ export default function DashboardPage() {
   const [stats, setStats] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const { dark } = useTheme();
 
   useEffect(() => {
     const load = async () => {
@@ -39,12 +41,15 @@ export default function DashboardPage() {
   }, []);
 
   if (loading) {
-    return <div className="card">Loading dashboard analytics...</div>;
+    return <div className="card dark:text-dark-text">Loading dashboard analytics...</div>;
   }
 
   if (error) {
-    return <div className="rounded-xl border border-danger-100 bg-danger-50 px-4 py-3 text-danger-500">{error}</div>;
+    return <div className="rounded-xl border border-danger-100 bg-danger-50 px-4 py-3 text-danger-500 dark:border-danger-500/30 dark:bg-danger-500/10">{error}</div>;
   }
+
+  const axisColor = dark ? "#94a3b8" : "#64748b";
+  const gridColor = dark ? "#334155" : "#e2e8f0";
 
   return (
     <div className="space-y-6">
@@ -63,7 +68,7 @@ export default function DashboardPage() {
 
       <section className="grid gap-4 lg:grid-cols-2">
         <div className="card h-[320px]">
-          <h3 className="mb-4 text-lg font-semibold">Approval vs Rejection</h3>
+          <h3 className="mb-4 text-lg font-semibold dark:text-dark-text">Approval vs Rejection</h3>
           <ResponsiveContainer width="100%" height="90%">
             <PieChart>
               <Pie data={stats.approval_vs_rejection} dataKey="value" nameKey="name" outerRadius={110} label>
@@ -71,19 +76,19 @@ export default function DashboardPage() {
                   <Cell key={entry.name} fill={pieColors[index % pieColors.length]} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip contentStyle={{ backgroundColor: dark ? "#1e293b" : "#fff", border: `1px solid ${gridColor}`, borderRadius: 12, color: dark ? "#e2e8f0" : "#1e293b" }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
 
         <div className="card h-[320px]">
-          <h3 className="mb-4 text-lg font-semibold">Loan Amount Distribution</h3>
+          <h3 className="mb-4 text-lg font-semibold dark:text-dark-text">Loan Amount Distribution</h3>
           <ResponsiveContainer width="100%" height="90%">
             <BarChart data={stats.loan_amount_distribution}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey="label" tick={{ fill: axisColor }} />
+              <YAxis allowDecimals={false} tick={{ fill: axisColor }} />
+              <Tooltip contentStyle={{ backgroundColor: dark ? "#1e293b" : "#fff", border: `1px solid ${gridColor}`, borderRadius: 12, color: dark ? "#e2e8f0" : "#1e293b" }} />
               <Bar dataKey="count" fill="#0f766e" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -92,27 +97,27 @@ export default function DashboardPage() {
 
       <section className="grid gap-4 lg:grid-cols-2">
         <div className="card h-[340px]">
-          <h3 className="mb-4 text-lg font-semibold">Risk Factor Frequency</h3>
+          <h3 className="mb-4 text-lg font-semibold dark:text-dark-text">Risk Factor Frequency</h3>
           <ResponsiveContainer width="100%" height="90%">
             <BarChart data={stats.risk_factor_frequency} layout="vertical" margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" allowDecimals={false} />
-              <YAxis dataKey="factor" type="category" width={160} />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis type="number" allowDecimals={false} tick={{ fill: axisColor }} />
+              <YAxis dataKey="factor" type="category" width={160} tick={{ fill: axisColor }} />
+              <Tooltip contentStyle={{ backgroundColor: dark ? "#1e293b" : "#fff", border: `1px solid ${gridColor}`, borderRadius: 12, color: dark ? "#e2e8f0" : "#1e293b" }} />
               <Bar dataKey="count" fill="#f59e0b" radius={[0, 8, 8, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         <div className="card h-[340px]">
-          <h3 className="mb-4 text-lg font-semibold">Feature Importance Summary</h3>
+          <h3 className="mb-4 text-lg font-semibold dark:text-dark-text">Feature Importance Summary</h3>
           <ResponsiveContainer width="100%" height="90%">
             <BarChart data={stats.feature_importance_summary.slice(0, 8)} layout="vertical" margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
-              <YAxis dataKey="feature" type="category" width={180} />
-              <Tooltip />
-              <Bar dataKey="importance" fill="#334155" radius={[0, 8, 8, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis type="number" tick={{ fill: axisColor }} />
+              <YAxis dataKey="feature" type="category" width={180} tick={{ fill: axisColor }} />
+              <Tooltip contentStyle={{ backgroundColor: dark ? "#1e293b" : "#fff", border: `1px solid ${gridColor}`, borderRadius: 12, color: dark ? "#e2e8f0" : "#1e293b" }} />
+              <Bar dataKey="importance" fill={dark ? "#64748b" : "#334155"} radius={[0, 8, 8, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

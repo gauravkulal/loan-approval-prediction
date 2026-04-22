@@ -56,14 +56,14 @@ export default function LoanForm({ formData, setFormData, onSubmit, loading }) {
     <form className="space-y-6" onSubmit={onSubmit}>
       {fieldConfig.map((section) => (
         <section key={section.section} className="card">
-          <h3 className="mb-4 text-xl font-semibold text-slate-900">{section.section}</h3>
+          <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-dark-text">{section.section}</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {section.fields.map((field) => (
               <label key={field.name} className="space-y-2">
-                <span className="text-sm font-medium text-slate-600">{field.label}</span>
+                <span className="text-sm font-medium text-slate-600 dark:text-dark-muted">{field.label}</span>
                 {field.type === "select" ? (
                   <select
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2 shadow-sm outline-none transition focus:border-brand-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm outline-none transition focus:border-brand-500 dark:border-dark-border dark:bg-slate-800 dark:text-dark-text"
                     value={formData[field.name]}
                     onChange={(e) => handleChange(field.name, e.target.value)}
                   >
@@ -75,7 +75,7 @@ export default function LoanForm({ formData, setFormData, onSubmit, loading }) {
                   </select>
                 ) : (
                   <input
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2 shadow-sm outline-none transition focus:border-brand-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm outline-none transition focus:border-brand-500 dark:border-dark-border dark:bg-slate-800 dark:text-dark-text"
                     type="number"
                     min={field.min}
                     max={field.max}
